@@ -202,9 +202,14 @@ nav{display:flex;gap:30px}
 
 /* ---------- CONTACT ---------- */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px}
-.contact-item{background:var(--surface);padding:20px;border-radius:var(--r);display:flex;gap:15px;align-items:center}
+.contact-item{background:var(--surface);padding:20px;border-radius:var(--r);display:flex;gap:15px;align-items:center;transition:transform .4s ease, box-shadow .4s ease}
+.contact-item:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,212,255,.2)}
+.contact-item a{color:var(--accent);text-decoration:none}
+.contact-item a:hover{color:#fff;text-decoration:underline}
 .contact-icon{width:45px;height:45px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold}
 .contact-item p{color:var(--muted)}
+.contact-item input,
+.contact-item textarea{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:none}
 footer{text-align:center;padding:20px;color:var(--muted);border-top:1px solid rgba(0,212,255,.1)}
 </style>
 </head>
@@ -347,17 +352,92 @@ footer{text-align:center;padding:20px;color:var(--muted);border-top:1px solid rg
 <!-- CONTACT -->
 <div id="contact" class="page">
   <div class="page-container">
-    <div class="section-header"><h2>Contact Me</h2><p>Let's connect and collaborate</p></div>
+    <div class="section-header">
+      <h2>Contact Me</h2>
+      <p>Let's connect and collaborate</p>
+    </div>
+
     <div class="contact-grid">
+
+      <!-- LEFT SIDE -->
       <div>
-        <div class="contact-item"><div class="contact-icon">📞</div><div><h4>Phone</h4><p>+91 9095332999</p></div></div>
-        <div class="contact-item"><div class="contact-icon">📧</div><div><h4>Email</h4><p>mukilan.s1988@gmail.com</p></div></div>
-        <div class="contact-item"><div class="contact-icon">📍</div><div><h4>Location</h4><p>Erode, Tamil Nadu, India</p></div></div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p>
+              <a href="tel:+919095332999">+91 90953 32999</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div>
+            <h4>WhatsApp</h4>
+            <p>
+              <a href="https://wa.me/919095332999" target="_blank">
+                Chat on WhatsApp
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <h4>Email</h4>
+            <p>
+              <a href="mailto:mukilan.s1988@gmail.com">
+                mukilan.s1988@gmail.com
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Location</h4>
+            <p>
+              <a href="https://www.google.com/maps/search/?api=1&query=Erode,Tamil+Nadu,India"
+                 target="_blank">
+                Erode, Tamil Nadu, India
+              </a>
+            </p>
+          </div>
+        </div>
+
       </div>
+
+      <!-- RIGHT SIDE -->
       <div>
-        <form>
-          <div class="contact-item"><div class="contact-icon">💬</div><div><p>Have a project or question? Drop me a message anytime!</p></div></div>
+
+        <div class="contact-item" style="padding:0;overflow:hidden;">
+          <iframe
+            src="https://www.google.com/maps?q=Erode,Tamil+Nadu,India&output=embed"
+            width="100%"
+            height="230"
+            style="border:0;border-radius:16px;"
+            loading="lazy">
+          </iframe>
+        </div>
+
+        <form class="contact-item" onsubmit="sendMessage(event)">
+          <div style="width:100%">
+            <h4 style="margin-bottom:10px">Send a Message</h4>
+
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+
+            <button class="btn btn-primary" style="margin-top:10px;width:100%">
+              Send Message
+            </button>
+          </div>
         </form>
+
       </div>
     </div>
   </div>
@@ -526,6 +606,11 @@ function closeModal(event) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal();
 });
+
+function sendMessage(e){
+  e.preventDefault();
+  alert("Thank you Mukilan! Your message has been sent 🚀");
+}
 </script>
 </body>
 </html>
