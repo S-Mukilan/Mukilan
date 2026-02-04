@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — VORTEX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --noir: #0a0a0a;
+            --electric: #00ffff;
+            --magenta: #ff00ff;
+            --cream: #f5f3ed;
+            --sunset: #ff6b35;
+            --deep-purple: #1a0f2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--noir);
+            color: var(--cream);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--electric);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, border-color 0.3s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            border-color: var(--magenta);
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence baseFrequency="0.9" numOctaves="3" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        header {
+            position: relative;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.3rem;
+            background: linear-gradient(135deg, var(--electric), var(--magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: var(--cream);
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+            letter-spacing: 0.05rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a.active {
+            color: var(--electric);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--electric);
+            transition: width 0.3s ease;
+        }
+
+        nav a.active::after,
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--electric);
+        }
+
+        .page-hero {
+            position: relative;
+            padding: 6rem 5% 4rem;
+            z-index: 10;
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 10rem);
+            line-height: 0.9;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--electric) 50%, var(--magenta) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-top: 1rem;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .contact-section {
+            position: relative;
+            padding: 4rem 5% 8rem;
+            z-index: 10;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .contact-info h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--electric);
+        }
+
+        .contact-info p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .info-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(26, 15, 46, 0.4);
+            border-left: 3px solid var(--electric);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            background: rgba(26, 15, 46, 0.6);
+            border-left-color: var(--magenta);
+            transform: translateX(10px);
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--electric);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--cream);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            border-color: var(--electric);
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .contact-form-wrapper {
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .contact-form {
+            background: rgba(26, 15, 46, 0.4);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            color: var(--electric);
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            color: var(--cream);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--electric);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: linear-gradient(135deg, var(--electric), var(--magenta));
+            color: var(--noir);
+            border: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--magenta), var(--electric));
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 0;
+        }
+
+        .submit-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        footer {
+            position: relative;
+            padding: 4rem 5%;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+            text-align: center;
+            z-index: 10;
+        }
+
+        footer p {
+            font-weight: 300;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 968px) {
+            body {
+                cursor: auto;
+            }
+            
+            .cursor {
+                display: none;
+            }
+
+            nav {
+                gap: 1.5rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="bg-grid"></div>
+    <div class="noise"></div>
+
+    <header>
+        <a href="index.html" class="logo">VORTEX</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="work.html">Work</a>
+            <a href="about.html">About</a>
+            <a href="contact.html" class="active">Contact</a>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <h1 class="page-title">LET'S TALK</h1>
+        <p class="page-subtitle">Ready to start your next project?</p>
+    </section>
+
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>GET IN TOUCH</h2>
+                <p>
+                    Have a project in mind? We'd love to hear about it. Reach out and let's create something extraordinary together.
+                </p>
+
+                <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">hello@vortexstudio.com</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Phone</div>
+                    <div class="info-value">1234567899</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Location</div>
+                    <div class="info-value">San Francisco, CA</div>
+                </div>
+
+                <div class="social-links">
+                    <a href="#" class="social-link">𝕏</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">IG</a>
+                    <a href="#" class="social-link">Be</a>
+                </div>
+            </div>
+
+            <div class="contact-form-wrapper">
+                <div class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span>SEND MESSAGE</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 VORTEX Digital Studio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const interactiveElements = document.querySelectorAll('a, .submit-btn, input, textarea, .info-item, .social-link');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Form submission handler
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>

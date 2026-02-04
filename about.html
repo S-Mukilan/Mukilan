@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — VORTEX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --noir: #0a0a0a;
+            --electric: #00ffff;
+            --magenta: #ff00ff;
+            --cream: #f5f3ed;
+            --sunset: #ff6b35;
+            --deep-purple: #1a0f2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--noir);
+            color: var(--cream);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--electric);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, border-color 0.3s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            border-color: var(--magenta);
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence baseFrequency="0.9" numOctaves="3" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        header {
+            position: relative;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.3rem;
+            background: linear-gradient(135deg, var(--electric), var(--magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: var(--cream);
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+            letter-spacing: 0.05rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a.active {
+            color: var(--electric);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--electric);
+            transition: width 0.3s ease;
+        }
+
+        nav a.active::after,
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--electric);
+        }
+
+        .page-hero {
+            position: relative;
+            padding: 6rem 5% 4rem;
+            z-index: 10;
+        }
+
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 10rem);
+            line-height: 0.9;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--electric) 50%, var(--magenta) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .story-section {
+            position: relative;
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            z-index: 10;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            margin-bottom: 6rem;
+        }
+
+        .story-content h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            color: var(--electric);
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .story-content p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .highlight {
+            color: var(--sunset);
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            animation: fadeInUp 1s ease 0.7s both;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(26, 15, 46, 0.4);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
+            border-color: var(--electric);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--electric), var(--magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .team-section {
+            position: relative;
+            padding: 6rem 5%;
+            z-index: 10;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: 0.1em;
+            animation: fadeInUp 1s ease;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .team-member {
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .team-member:nth-child(1) { animation-delay: 0.2s; }
+        .team-member:nth-child(2) { animation-delay: 0.4s; }
+        .team-member:nth-child(3) { animation-delay: 0.6s; }
+        .team-member:nth-child(4) { animation-delay: 0.8s; }
+
+        .member-photo {
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, var(--deep-purple), var(--noir));
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .member-photo::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            border: 2px solid var(--magenta);
+            opacity: 0.4;
+        }
+
+        .team-member:hover .member-photo {
+            border-color: var(--electric);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+        }
+
+        .member-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--electric);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .member-bio {
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        footer {
+            position: relative;
+            padding: 4rem 5%;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+            text-align: center;
+            z-index: 10;
+        }
+
+        footer p {
+            font-weight: 300;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 968px) {
+            body {
+                cursor: auto;
+            }
+            
+            .cursor {
+                display: none;
+            }
+
+            nav {
+                gap: 1.5rem;
+            }
+
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="bg-grid"></div>
+    <div class="noise"></div>
+
+    <header>
+        <a href="index.html" class="logo">VORTEX</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="work.html">Work</a>
+            <a href="about.html" class="active">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <h1 class="page-title">ABOUT US</h1>
+    </section>
+
+    <section class="story-section">
+        <div class="story-grid">
+            <div class="story-content">
+                <h2>OUR STORY</h2>
+                <p>
+                    Founded in 2019, VORTEX emerged from a simple belief: <span class="highlight">digital experiences should be extraordinary</span>, not ordinary.
+                </p>
+                <p>
+                    We're a collective of designers, developers, and strategists who thrive at the intersection of creativity and technology. Our mission is to craft digital products that don't just meet expectations—they exceed them.
+                </p>
+            </div>
+            <div class="story-content">
+                <h2>OUR APPROACH</h2>
+                <p>
+                    We believe in the power of <span class="highlight">bold ideas executed with precision</span>. Every project begins with deep research and strategic thinking, followed by meticulous design and development.
+                </p>
+                <p>
+                    Our process is collaborative, iterative, and always focused on delivering measurable results that drive real business impact.
+                </p>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Happy Clients</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Awards Won</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <h2 class="section-title">MEET THE TEAM</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-photo"></div>
+                <h3 class="member-name">Sarah Chen</h3>
+                <div class="member-role">Creative Director</div>
+                <p class="member-bio">
+                    Leading our creative vision with 12 years of experience in brand strategy and visual design.
+                </p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"></div>
+                <h3 class="member-name">Marcus Rodriguez</h3>
+                <div class="member-role">Lead Developer</div>
+                <p class="member-bio">
+                    Full-stack developer specializing in cutting-edge web technologies and scalable architecture.
+                </p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"></div>
+                <h3 class="member-name">Aisha Patel</h3>
+                <div class="member-role">UX Strategist</div>
+                <p class="member-bio">
+                    Transforming user research into intuitive experiences that drive engagement and conversion.
+                </p>
+            </div>
+            <div class="team-member">
+                <div class="member-photo"></div>
+                <h3 class="member-name">James Liu</h3>
+                <div class="member-role">Motion Designer</div>
+                <p class="member-bio">
+                    Bringing interfaces to life with fluid animations and micro-interactions that delight.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 VORTEX Digital Studio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const interactiveElements = document.querySelectorAll('a, .team-member, .stat');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+    </script>
+</body>
+</html>
