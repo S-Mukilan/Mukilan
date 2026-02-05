@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mukilan — Portfolio</title>
+<style>
+/* ---------- THEME & BASE ---------- */
+:root{
+  --bg:#0a0e27;
+  --surface:#141b3d;
+  --text:#e8edf7;
+  --accent:#00f2ff;
+  --accent2:#7a0c3c;
+  --muted:#8b9dc3;
+  --r:16px;
+  --shadow:0 8px 32px rgba(0,212,255,.15);
+  --transition:all .6s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ---------- HEADER NAV ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  padding:20px 40px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(10,14,39,.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(26, 176, 206, 0.1);
+}
+.logo{
+  font-size:1.5rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  cursor:pointer;transition:var(--transition);
+}
+nav{display:flex;gap:30px}
+.nav-link{
+  color:var(--muted);text-decoration:none;font-weight:600;cursor:pointer;
+  transition:var(--transition);
+}
+.nav-link:hover,.nav-link.active{color:var(--accent)}
+
+/* ---------- SOCIAL ICONS ---------- */
+.social-icons{display:flex;gap:15px;align-items:center}
+.social-icon{width:40px;height:40px;border-radius:50%;background:rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition);text-decoration:none;color:var(--accent);font-size:1.2rem}
+.social-icon:hover{background:linear-gradient(135deg,var(--accent),var(--accent2));transform:translateY(-3px)}
+/* ---------- HERO ---------- */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 40px}
+.hero-content{max-width:1100px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero h1{font-size:4rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{color:var(--muted);margin-bottom:20px;font-size:1.3rem}
+.typing{color:var(--accent);font-weight:600;border-right:3px solid var(--accent);white-space:nowrap;overflow:hidden;animation:blink .7s infinite}
+@keyframes blink{50%{border-color:transparent}}
+.hero-buttons{margin-top:30px;display:flex;gap:20px}
+.btn{padding:14px 32px;border-radius:50px;font-weight:700;cursor:pointer;border:none;font-size:1rem;transition:var(--transition)}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.btn-primary:hover{transform:translateY(-3px)}
+.btn-secondary{border:2px solid var(--accent);background:transparent;color:var(--accent)}
+.btn-secondary:hover{background:var(--accent);color:var(--bg)}
+.profile-card{width:380px;height:450px;border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.profile-card img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- SECTIONS ---------- */
+.page{display:none;animation:fadeIn .6s ease-in-out}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.page-container{padding:100px 40px 40px;max-width:1200px;margin:auto}
+.section-header{text-align:center;margin-bottom:60px}
+.section-header h2{font-size:3rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.section-header p{color:var(--muted)}
+
+/* ---------- ABOUT ---------- */
+.about-content{display:grid;grid-template-columns:350px 1fr;gap:50px;background:var(--surface);padding:50px;border-radius:var(--r)}
+.about-image img{width:100%;border-radius:var(--r)}
+.about-text h3{color:var(--accent);margin-bottom:20px;font-size:1.8rem}
+.about-text p{margin-bottom:16px;color:var(--muted)}
+.about-stats{display:flex;gap:30px;margin-top:20px}
+.stat-box{text-align:center;flex:1;background:rgba(0,212,255,.05);border-radius:var(--r);padding:20px}
+.stat-box h4{color:var(--accent);font-size:2rem}
+
+/* ---------- SKILLS ---------- */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
+.skill-card{background:var(--surface);padding:30px;border-radius:var(--r);transition:var(--transition)}
+.skill-card:hover{transform:translateY(-8px)}
+.skill-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.skill-bar{height:10px;background:rgba(0,212,255,.1);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.skill-progress{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:10px}
+.skill-description{color:var(--muted);font-size:.95rem}
+
+/* ---------- CERTIFICATES ---------- */
+.certificates-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px}
+.certificate-card{
+  background:var(--surface);
+  border-radius:var(--r);
+  overflow:hidden;
+  transition:var(--transition);
+  cursor:pointer;
+  position:relative;
+}
+.certificate-card:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+.certificate-card::after{
+  content:'👁️ View';
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:.8rem;
+  opacity:0;
+  transition:var(--transition);
+}
+.certificate-card:hover::after{opacity:1}
+.certificate-info{padding:20px}
+.certificate-info h3{color:var(--text);margin-bottom:6px}
+.certificate-info p{color:var(--muted);font-size:.9rem}
+
+/* ---------- PROJECTS ---------- */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px}
+.project-card{
+  background:var(--surface);
+  border-radius:var(--r);
+  overflow:hidden;
+  transition:var(--transition);
+  cursor:pointer;
+  position:relative;
+}
+.project-card:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+.project-card::after{
+  content:'🔗 View';
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:.8rem;
+  opacity:0;
+  transition:var(--transition);
+}
+.project-card:hover::after{opacity:1}
+.project-info{padding:20px}
+.project-info h3{color:var(--text);margin-bottom:10px}
+.project-info p{color:var(--muted);font-size:.95rem}
+.project-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.tag{background:rgba(0,212,255,.1);color:var(--accent);padding:4px 10px;border-radius:12px;font-size:.8rem}
+.github-link{display:inline-block;margin-top:15px;padding:8px 16px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;text-decoration:none;border-radius:20px;font-size:.85rem;font-weight:600;transition:var(--transition)}
+.github-link:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,212,255,.3)}
+
+/* ---------- MODAL ---------- */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.9);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  animation:modalFadeIn .3s ease;
+}
+.modal.active{display:flex}
+@keyframes modalFadeIn{from{opacity:0}to{opacity:1}}
+.modal-content{
+  background:var(--surface);
+  border-radius:var(--r);
+  max-width:90%;
+  max-height:90%;
+  overflow:auto;
+  position:relative;
+  padding:40px;
+  animation:modalSlideIn .3s ease;
+}
+@keyframes modalSlideIn{from{transform:translateY(-50px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{
+  position:absolute;
+  top:15px;
+  right:15px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  border:none;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:1.5rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:var(--transition);
+}
+.modal-close:hover{transform:rotate(90deg)}
+.modal-body h2{color:var(--accent);margin-bottom:20px}
+.modal-body p{color:var(--muted);line-height:1.8;margin-bottom:15px}
+.modal-actions{display:flex;gap:15px;margin-top:30px}
+
+/* ---------- CONTACT ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px}
+.contact-item{background:var(--surface);padding:20px;border-radius:var(--r);display:flex;gap:15px;align-items:center;transition:transform .4s ease, box-shadow .4s ease}
+.contact-item:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,212,255,.2)}
+.contact-item a{color:var(--accent);text-decoration:none}
+.contact-item a:hover{color:#fff;text-decoration:underline}
+.contact-icon{width:45px;height:45px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold}
+.contact-item p{color:var(--muted)}
+.contact-item input,
+.contact-item textarea{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:none}
+footer{text-align:center;padding:20px;color:var(--muted);border-top:1px solid rgba(0,212,255,.1)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" onclick="navigateTo('home')">Mukilan</div>
+  <nav>
+    <span class="nav-link active" onclick="navigateTo('home')">Home</span>
+    <span class="nav-link" onclick="navigateTo('about')">About</span>
+    <span class="nav-link" onclick="navigateTo('skills')">Skills</span>
+    <span class="nav-link" onclick="navigateTo('certificates')">Certificates</span>
+    <span class="nav-link" onclick="navigateTo('projects')">Projects</span>
+    <span class="nav-link" onclick="navigateTo('contact')">Contact</span>
+  </nav>
+  <div class="social-icons">
+    <a href="https://github.com/S-Mukilan/Mukilan" target="_blank" class="social-icon" title="GitHub">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.6.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+      </svg>
+    </a>
+    <a href="https://www.linkedin.com/in/mukilan-mukilan-646286375/" target="_blank" class="social-icon" title="LinkedIn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.722-2.004 1.418-.103.25-.129.599-.129.948v5.439h-3.554V9h3.414s.051-1.771.708-1.771c.335 0 1.958.335 1.958 3.205v.446h.405V9c0 0-1.165-.29-2.744-.29-2.158 0-4.052 1.327-4.052 4.861v6.881zM5.337 7.433c-1.144 0-2.063-.909-2.063-2.031s.92-2.031 2.063-2.031c1.143 0 2.063.909 2.063 2.031s-.92 2.031-2.063 2.031zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <section class="hero">
+    <div class="hero-content">
+      <div>
+        <h1>Hi, I'm Mukilan S </h1>
+        <p class="subtitle">AI & Data Science Student</p>
+        <div class="typing" id="typingText"></div>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="navigateTo('projects')">View Projects</button>
+          <button class="btn btn-secondary" onclick="navigateTo('contact')">Get in Touch</button>
+        </div>
+      </div>
+      <div class="profile-card"><img src="https://via.placeholder.com/400x500/141b3d/00d4ff?text=Mukilan" alt="Profile"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="page">
+  <div class="page-container">
+    <div class="section-header">
+      <h2>About Me</h2>
+      <p>Who I am and what I do</p>
+    </div>
+    <div class="about-content">
+      <div class="about-image"><img src="https://via.placeholder.com/350x450/141b3d/00d4ff?text=About+Me"></div>
+      <div class="about-text">
+        <h3>Hello! I'm Mukilan</h3>
+        <p>I'm a student of Artificial Intelligence & Data Science at Erode Sengunthar Engineering College. Passionate about building intelligent and user-friendly software that combines creativity and technology.</p>
+        <p>I focus on web development, AI chatbots, and machine learning applications. My aim is to create efficient and aesthetic solutions that solve real-world problems.</p>
+        <div class="about-stats">
+          <div class="stat-box"><h4>7+</h4><p>Projects Completed</p></div>
+          <div class="stat-box"><h4>13+</h4><p>Certificates Earned</p></div>
+          <div class="stat-box"><h4>3+</h4><p>Years of Learning</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div id="skills" class="page">
+  <div class="page-container">
+    <div class="section-header"><h2>Skills</h2><p>Technologies I work with</p></div>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="skill-header"><h3>Python</h3><span>90%</span></div><div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div><p class="skill-description">AI, automation, and ML applications</p></div>
+      <div class="skill-card"><div class="skill-header"><h3>HTML / CSS / JS</h3><span>95%</span></div><div class="skill-bar"><div class="skill-progress" style="width:95%"></div></div><p class="skill-description">Responsive web design and UI/UX</p></div>
+      <div class="skill-card"><div class="skill-header"><h3>C++ / Java</h3><span>80%</span></div><div class="skill-bar"><div class="skill-progress" style="width:80%"></div></div><p class="skill-description">Strong fundamentals in OOP and logic</p></div>
+      <div class="skill-card"><div class="skill-header"><h3>Machine Learning</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div><p class="skill-description">Model building, training, and evaluation</p></div>
+      <div class="skill-card"><div class="skill-header"><h3>Django</h3><span>82%</span></div><div class="skill-bar"><div class="skill-progress" style="width:82%"></div></div><p class="skill-description">Backend development and REST APIs</p></div>
+      <div class="skill-card"><div class="skill-header"><h3>MongoDB</h3><span>80%</span></div><div class="skill-bar"><div class="skill-progress" style="width:80%"></div></div><p class="skill-description">NoSQL database design and management</p></div>
+      <div class="skill-card"><div class="skill-header"><h3>Dart & Flutter</h3><span>78%</span></div><div class="skill-bar"><div class="skill-progress" style="width:78%"></div></div><p class="skill-description">Cross-platform mobile app development</p></div>
+      <div class="skill-card"><div class="skill-header"><h3>Power BI</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div><p class="skill-description">Data visualization and business intelligence</p></div>
+      <div class="skill-card"><div class="skill-header"><h3>REST APIs</h3><span>87%</span></div><div class="skill-bar"><div class="skill-progress" style="width:87%"></div></div><p class="skill-description">Efficient API design and implementation</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CERTIFICATES -->
+<div id="certificates" class="page">
+  <div class="page-container">
+    <div class="section-header"><h2>Certificates</h2><p>Achievements & Learning</p></div>
+    <div class="certificates-grid">
+      <div class="certificate-card" onclick="openCertificate('cert1')">
+        <div class="certificate-info">
+          <h3>Python for Data Science</h3>
+          <p>Coursera — 2024</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert2')">
+        <div class="certificate-info">
+          <h3>Machine Learning Specialization</h3>
+          <p>Google — 2024</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert3')">
+        <div class="certificate-info">
+          <h3>Web Development Bootcamp</h3>
+          <p>Udemy — 2023</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert4')">
+        <div class="certificate-info">
+          <h3>Data Analytics</h3>
+          <p>Novitech — 2025</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert5')">
+        <div class="certificate-info">
+          <h3>Python & C & Java Programming</h3>
+          <p>Cybernaute — 2025</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert6')">
+        <div class="certificate-info">
+          <h3>Galactic Problem Solver</h3>
+          <p>NASA International Space Apps Challenge — 2025</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert7')">
+        <div class="certificate-info">
+          <h3>PowerBI Workshop</h3>
+          <p>OfficeMaster — 2025</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert8')">
+        <div class="certificate-info">
+          <h3>Solution Challenge</h3>
+          <p>GDG on Campus HackI25 — 2025</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert9')">
+        <div class="certificate-info">
+          <h3>Tech Trio Course on Python</h3>
+          <p>Cybernaute — 2025</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert10')">
+        <div class="certificate-info">
+          <h3>Machine Learning Internship</h3>
+          <p>NoviTech R&D — 2025</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert11')">
+        <div class="certificate-info">
+          <h3>Artificial Intelligence Internship</h3>
+          <p>NoviTech R&D — 2025</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert12')">
+        <div class="certificate-info">
+          <h3>Tech Trio Course on C++</h3>
+          <p>Cybernaute — 2024</p>
+        </div>
+      </div>
+      <div class="certificate-card" onclick="openCertificate('cert13')">
+        <div class="certificate-info">
+          <h3>Artificial Intelligence Skill Camp</h3>
+          <p>NoviTech R&D — 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="projects" class="page">
+  <div class="page-container">
+    <div class="section-header"><h2>Projects</h2><p>My Latest Work</p></div>
+    <div class="projects-grid">
+      <div class="project-card" onclick="openProject('proj1')">
+        <div class="project-info">
+          <h3>AI Chatbot using NLP</h3>
+          <p>Conversational chatbot that understands natural language and responds intelligently.</p>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">NLP</span>
+            <span class="tag">TensorFlow</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card" onclick="openProject('proj2')">
+        <div class="project-info">
+          <h3>Automated Quality Control System</h3>
+          <p>Computer vision system that detects defects in products using deep learning.</p>
+          <div class="project-tags">
+            <span class="tag">OpenCV</span>
+            <span class="tag">Deep Learning</span>
+            <span class="tag">CNN</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card" onclick="openProject('proj3')">
+        <div class="project-info">
+          <h3>Portfolio Website</h3>
+          <p>Personal portfolio built using HTML, CSS, and JavaScript.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+          <a href="https://github.com/S-Mukilan/portfolio" target="_blank" class="github-link">View on GitHub</a>
+        </div>
+      </div>
+      <div class="project-card" onclick="openProject('proj4')">
+        <div class="project-info">
+          <h3>Campus Management System</h3>
+          <p>Comprehensive CMS platform for managing campus operations, student records, and administrative tasks.</p>
+          <div class="project-tags">
+            <span class="tag">CMS</span>
+            <span class="tag">Database</span>
+            <span class="tag">Full Stack</span>
+          </div>
+          <a href="https://github.com/S-Mukilan/cms_project" target="_blank" class="github-link">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="page">
+  <div class="page-container">
+    <div class="section-header">
+      <h2>Contact Me</h2>
+      <p>Let's connect and collaborate</p>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- LEFT SIDE -->
+      <div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p>
+              <a href="tel:+919095332999">+91 90953 32999</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div>
+            <h4>WhatsApp</h4>
+            <p>
+              <a href="https://wa.me/919095332999" target="_blank">
+                Chat on WhatsApp
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <h4>Email</h4>
+            <p>
+              <a href="mailto:mukilan.s1988@gmail.com">
+                mukilan.s1988@gmail.com
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Location</h4>
+            <p>
+              <a href="https://www.google.com/maps/search/?api=1&query=Erode,Tamil+Nadu,India"
+                 target="_blank">
+                Erode, Tamil Nadu, India
+              </a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div>
+
+        <div class="contact-item" style="padding:0;overflow:hidden;">
+          <iframe
+            src="https://www.google.com/maps?q=Erode,Tamil+Nadu,India&output=embed"
+            width="100%"
+            height="230"
+            style="border:0;border-radius:16px;"
+            loading="lazy">
+          </iframe>
+        </div>
+
+        <form class="contact-item" onsubmit="sendMessage(event)">
+          <div style="width:100%">
+            <h4 style="margin-bottom:10px">Send a Message</h4>
+
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+
+            <button class="btn btn-primary" style="margin-top:10px;width:100%">
+              Send Message
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal" onclick="closeModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<footer>© 2025 Mukilan S | Designed with ❤️ by Mukilan</footer>
+
+<script>
+/* Navigation between sections */
+function navigateTo(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelector('#'+id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  if(event && event.target) event.target.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* Typing animation */
+const text="Frontend Developer | AI Enthusiast | Creative Coder";
+let i=0;
+function typingEffect(){
+  if(i<text.length){document.getElementById('typingText').innerHTML+=text.charAt(i);i++;setTimeout(typingEffect,70);}
+}
+typingEffect();
+
+/* Certificate Data */
+const certificates = {
+  cert1: {
+    title: 'Python for Data Science',
+    issuer: 'Coursera',
+    date: '2024',
+    description: 'Comprehensive course covering Python programming fundamentals, data manipulation with pandas, data visualization, and statistical analysis. Completed hands-on projects involving real-world datasets.',
+    skills: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Data Analysis'],
+    certificateUrl: '#'
+  },
+  cert2: {
+    title: 'Machine Learning Specialization',
+    issuer: 'Google',
+    date: '2024',
+    description: 'Advanced specialization covering supervised and unsupervised learning, neural networks, deep learning, and deployment of ML models. Worked on industry-standard projects.',
+    skills: ['Machine Learning', 'TensorFlow', 'Neural Networks', 'Model Deployment'],
+    certificateUrl: '#'
+  },
+  cert3: {
+    title: 'Web Development Bootcamp',
+    issuer: 'Udemy',
+    date: '2023',
+    description: 'Complete web development bootcamp covering frontend and backend technologies. Built multiple full-stack applications from scratch.',
+    skills: ['HTML', 'CSS', 'JavaScript', 'Responsive Design', 'Web APIs'],
+    certificateUrl: '#'
+  },
+  cert4: {
+    title: 'Data Analytics',
+    issuer: 'NoviTech',
+    date: '2025',
+    description: 'Comprehensive internship program in Data Analytics covering data analysis, visualization, and business intelligence. Successfully completed hands-on projects analyzing real datasets.',
+    skills: ['Data Analytics', 'Power BI', 'SQL', 'Data Visualization', 'Business Intelligence'],
+    certificateUrl: '#'
+  },
+  cert5: {
+    title: 'Tech Trio Course on Python',
+    issuer: 'Cybernaute',
+    date: '2025',
+    description: 'Deep understanding of Python programming fundamentals with practical assignments and assessments. Achieved impressive score of 81% on project assessments, demonstrating mastery of core concepts.',
+    skills: ['Python', 'Programming Fundamentals', 'Problem Solving'],
+    certificateUrl: '#'
+  },
+  cert6: {
+    title: 'Galactic Problem Solver',
+    issuer: 'NASA International Space Apps Challenge',
+    date: '2025',
+    description: 'Outstanding participation in the 2025 NASA International Space Apps Challenge for addressing challenges we face on Earth and in space. Recognized for innovative thinking and collaborative problem-solving.',
+    skills: ['Space Apps', 'Innovation', 'Problem Solving', 'Collaboration'],
+    certificateUrl: '#'
+  },
+  cert7: {
+    title: 'PowerBI Workshop',
+    issuer: 'OfficeMaster',
+    date: '2025',
+    description: 'Verified completion of PowerBI workshop. Certificate holder can create AI-Powered interactive dashboards in PowerBI in under 30 minutes, demonstrating expertise in business intelligence tools.',
+    skills: ['Power BI', 'Dashboard Creation', 'Data Visualization', 'AI Integration'],
+    certificateUrl: '#'
+  },
+  cert8: {
+    title: 'GDG Campus Solution Challenge',
+    issuer: 'Google Developer Groups on Campus',
+    date: '2025',
+    description: 'Certificate of participation in the GDG on Campus Solution Challenge powered by Hack2Skill. Highlighted dedication to learning and growth within the tech community while making impact in society.',
+    skills: ['Problem Solving', 'Technology', 'Innovation', 'Social Impact'],
+    certificateUrl: '#'
+  },
+  cert9: {
+    title: 'Tech Trio Course on C++',
+    issuer: 'Cybernaute',
+    date: '2024',
+    description: 'Deep understanding of C++ programming with consistent excellence in assignments and assessments. Achieved impressive score of 77% on project assessments, demonstrating strong fundamentals in programming.',
+    skills: ['C++', 'OOP', 'Programming Fundamentals', 'Data Structures'],
+    certificateUrl: '#'
+  },
+  cert10: {
+    title: 'Machine Learning Internship',
+    issuer: 'NoviTech R&D Private Limited',
+    date: '2025',
+    description: 'One month internship successfully completed in Machine Learning from April 24th to May 24th 2025. Gained practical experience in ML model development and deployment.',
+    skills: ['Machine Learning', 'Model Training', 'Deep Learning', 'Practical Application'],
+    certificateUrl: '#'
+  },
+  cert11: {
+    title: 'Artificial Intelligence Internship',
+    issuer: 'NoviTech R&D Private Limited',
+    date: '2025',
+    description: 'One month internship successfully completed in Artificial Intelligence from April 24th to May 24th 2025. Worked on cutting-edge AI projects and implementations.',
+    skills: ['Artificial Intelligence', 'AI Applications', 'Neural Networks', 'Practical AI'],
+    certificateUrl: '#'
+  },
+  cert12: {
+    title: 'Artificial Intelligence Skill Camp',
+    issuer: 'NoviTech R&D Private Limited',
+    date: '2025',
+    description: '2 hour Skill Camp in Artificial Intelligence conducted on April 12th 2025. Intensive training session covering essential AI concepts and practical applications.',
+    skills: ['AI Fundamentals', 'AI Applications', 'Hands-on Training'],
+    certificateUrl: '#'
+  }
+};
+
+/* Project Data */
+const projects = {
+  proj1: {
+    title: 'AI Chatbot using NLP',
+    description: 'An intelligent conversational chatbot built using Natural Language Processing techniques. The bot can understand context, maintain conversation history, and provide relevant responses.',
+    technologies: ['Python', 'TensorFlow', 'NLTK', 'Flask'],
+    features: [
+      'Natural language understanding',
+      'Context-aware responses',
+      'Multi-intent classification',
+      'Custom training on domain-specific data'
+    ],
+    github: '#', // Replace with actual GitHub URL
+    demo: '#' // Replace with actual demo URL
+  },
+  proj2: {
+    title: 'Automated Quality Control System',
+    description: 'Computer vision system for automated defect detection in manufacturing. Uses convolutional neural networks to identify and classify product defects with high accuracy.',
+    technologies: ['Python', 'OpenCV', 'TensorFlow', 'CNN'],
+    features: [
+      'Real-time defect detection',
+      'Multiple defect classification',
+      'High accuracy (95%+)',
+      'Integration with production line'
+    ],
+    github: '#',
+    demo: '#'
+  },
+  proj3: {
+    title: 'Portfolio Website',
+    description: 'Modern, responsive portfolio website showcasing projects and skills. Features smooth animations, interactive elements, and optimized performance.',
+    technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
+    features: [
+      'Fully responsive design',
+      'Smooth page transitions',
+      'Interactive UI elements',
+      'Optimized performance'
+    ],
+    github: '#',
+    demo: window.location.href
+  }
+};
+
+/* Open Certificate Modal */
+function openCertificate(certId) {
+  const cert = certificates[certId];
+  const modal = document.getElementById('modal');
+  const modalBody = document.getElementById('modalBody');
+  
+  modalBody.innerHTML = `
+    <h2>${cert.title}</h2>
+    <p style="color:var(--accent);margin-bottom:20px">${cert.issuer} • ${cert.date}</p>
+    <p>${cert.description}</p>
+    ${cert.image ? `<img src="${cert.image}" style="max-width:100%;max-height:400px;border-radius:10px;margin:20px 0;object-fit:contain">` : ''}
+    <h3 style="color:var(--accent);margin-top:25px;margin-bottom:10px">Skills Acquired:</h3>
+    <div class="project-tags">
+      ${cert.skills.map(skill => `<span class="tag">${skill}</span>`).join('')}
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+    </div>
+  `;
+  
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+/* Open Project Modal */
+function openProject(projId) {
+  const proj = projects[projId];
+  const modal = document.getElementById('modal');
+  const modalBody = document.getElementById('modalBody');
+  
+  modalBody.innerHTML = `
+    <h2>${proj.title}</h2>
+    <p>${proj.description}</p>
+    <h3 style="color:var(--accent);margin-top:25px;margin-bottom:10px">Technologies:</h3>
+    <div class="project-tags">
+      ${proj.technologies.map(tech => `<span class="tag">${tech}</span>`).join('')}
+    </div>
+    <h3 style="color:var(--accent);margin-top:25px;margin-bottom:10px">Key Features:</h3>
+    <ul style="color:var(--muted);margin-left:20px">
+      ${proj.features.map(feature => `<li>${feature}</li>`).join('')}
+    </ul>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="window.open('${proj.github}', '_blank')">View on GitHub</button>
+      <button class="btn btn-secondary" onclick="window.open('${proj.demo}', '_blank')">Live Demo</button>
+      <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+    </div>
+  `;
+  
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+/* Close Modal */
+function closeModal(event) {
+  if (!event || event.target.id === 'modal' || event.target.classList.contains('modal-close')) {
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+/* Close modal on ESC key */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+function sendMessage(e){
+  e.preventDefault();
+  alert("Thank you Mukilan! Your message has been sent 🚀");
+}
+</script>
+</body>
+</html>     
