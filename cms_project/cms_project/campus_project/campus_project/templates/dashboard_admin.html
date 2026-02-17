@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Admin Dashboard</h1>
+  <p>Welcome, {{ user.get_full_name|default:user.username }} — admin actions go here.</p>
+{% endblock %}

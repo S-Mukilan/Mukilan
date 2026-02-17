@@ -1,0 +1,26 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node modules (if using any build tools)
+node_modules/
+npm-debug.log
+
+# Environment variables
+.env
+.env.local
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# OS specific
+.AppleDouble
+.LSOverride
